@@ -1,0 +1,46 @@
+{% extends 'modules/base.html' %}
+{% load static %}
+
+{% block content %}
+    <h2 class="text center">Search Results</h2>
+    <div>
+        <table class="table table-bordered" id="productsTable">
+            <thead>
+                <tr>
+                    <th width="5%">ID</th>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Brand</th>                
+                    <th>Quantity</th>
+                    <th>Rate</th>
+                    <th>Status</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+            {% if products|length < 1 %}
+                <tr>
+                <td colspan="9" class="text-center">No Results!</td>
+                </tr>
+            {% else %}
+                {% for product in products %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.category }}</td>
+                        <td>{{ product.brand }}</td>
+                        <td>{{ product.quantity }}</td>
+                        <td>{{ product.rate }}</td>
+                        <td><label {% if product.status == 1 %} class="badge badge-success" {% else %} class="badge badge-danger" {% endif %}>{{ product.get_status_display }}</label></td>
+                       
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+    {% endblock %}
+    
+    {% block script %}
+        <script src="{% static 'js/order.js' %}"></script>
+    {% endblock %}
